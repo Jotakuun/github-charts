@@ -4,6 +4,6 @@ import * as ReactDOM from "react-dom";
 import { App } from "./components/App";
 
 ReactDOM.render(
-    <App />,
+    <App message={'React'}/>,
     document.getElementById("example")
 );
