@@ -5,15 +5,20 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
 
 let config = {
-    entry: "./src/index.tsx",
-    output: {
-        filename: "bundle.js",
-        path: path.resolve(__dirname, "../dist")
+    entry: [
+        'webpack-dev-server/client?http://localhost:3000',
+        'webpack/hot/only-dev-server',
+        './src/index.tsx'
+      ],
+      output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js',
+        publicPath: '/static/'
     },
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx", ".js", ".json", ".scss", ".css", ".jpeg", ".jpg", ".gif", ".png"],
+        extensions: ['.ts', '.tsx', '.js', '.json', '.scss', '.css', '.jpeg', '.jpg', '.gif', '.png'],
         alias: {
             images: path.resolve(__dirname, 'src/assets/images')  // src/assets/images alias
         },
@@ -24,10 +29,10 @@ let config = {
     module: {
         rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-            { test: /\.tsx?$/, loader: ["awesome-typescript-loader"] },
+            { test: /\.tsx?$/, loader: ['react-hot-loader', 'awesome-typescript-loader'] },
 
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            { enforce: "pre", test: /\.js$/, loader: ["source-map-loader", "babel-loader"] },
+            { enforce: 'pre', test: /\.js$/, loader: ['source-map-loader'] },
 
             {
                 test: /\.scss$/, // files ending with .scss
@@ -38,7 +43,7 @@ let config = {
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: ['file-loader?context=src/assets/images/&name=images/[path][name].[ext]', {  // images loader
+                loaders: ['file-loader?context=src/assets/images/&name=images/[path][name].[ext]', {
                   loader: 'image-webpack-loader',
                   query: {
                     mozjpeg: {
@@ -64,31 +69,23 @@ let config = {
 
     plugins: [
         new ExtractTextWebpackPlugin('styles.css'),
+        new webpack.HotModuleReplacementPlugin()
     ],
 
-    devServer: {
-        contentBase: path.resolve(__dirname, "../dist"), // A directory or URL to serve HTML content from.
-        historyApiFallback: true, // fallback to /index.html for Single Page Applications.
-        inline: true,
-        open: true,
-        compress: true,
-        hot: true
-    },
-
     // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
+    devtool: 'source-map',
 
     externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
+        'react': 'React',
+        'react-dom': 'ReactDOM'
     }
 }
 
 module.exports = config;
 
-if (process.env.NODE_ENV === 'production') { // if we're in production mode, here's what happens next
+if (process.env.NODE_ENV === 'production') { 
     module.exports.plugins.push(
-        new webpack.optimize.UglifyJsPlugin(), // call the uglify plugin
-        new OptimizeCSSAssets() // call the css optimizer (minfication)
+        new webpack.optimize.UglifyJsPlugin(),
+        new OptimizeCSSAssets() 
     );
 }
