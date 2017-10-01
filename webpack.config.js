@@ -37,10 +37,10 @@ let config = {
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { enforce: 'pre', test: /\.js$/, loader: ['source-map-loader'] },
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"'],
+                    use: ['css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'sass-loader'],
                 }),
             },
             {

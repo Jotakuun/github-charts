@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import * as styles from "./RadarChart.css";
+import * as styles from "./RadarChart.scss";
 
 export interface RadarChartProps { data: any; }
 
