@@ -1,9 +1,17 @@
 import React from 'react';
+import Navbar from './Navbar/Navbar';
 
-export default ({children}) => {
+import styles from './App.css';
+
+export default ({ children }) => {
   return (
-    <div id="container">
-      {children}
+    <div className={styles.Container}>
+      <header className={styles.Header}>
+        <Navbar />
+      </header>
+      <div>
+        {children}
+      </div>
     </div>
   );
 }
