@@ -31,11 +31,16 @@ export default class Dashboard extends React.Component {
     })
 
     return (
-      <div className={styles.Container}>
-        <h1>Dashboard</h1>
+      <div className={styles.Dashboard__Container}>
+        <aside className={styles.Dashboard__Aside}>
         <ul>{pickedRepos}</ul>
+        </aside>
+        <section className={styles.Dashboard__Chart}>
         <RadarChart />
+        </section>
+        <section className={styles.Dashboard__Chart}>
         <PopularityChart />
+        </section>
       </div>
     );
   }
