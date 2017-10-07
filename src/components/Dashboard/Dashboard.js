@@ -14,14 +14,11 @@ d3.request(apiHost + 'repos/facebook/react')
   .get((res) => console.log(res));
 
 export default class Dashboard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      pickedRepos: [
-        {author: 'facebook', name: 'react'},
-        {author: 'angular', name: 'angular'}
-      ],
-    }
+      ...props.route.state
+    };
   }
   render() {
     const pickedRepos = this.state.pickedRepos.map((repo, index) => {
