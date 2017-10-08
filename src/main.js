@@ -1,7 +1,9 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider, createStore } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import reducer from './store/reducers';
 
 // Components
 import App from './components/App';
@@ -9,6 +11,21 @@ import Dashboard from './components/Dashboard/Dashboard';
 
 // Base styling
 import './global.css';
+
+function withProps(Component, props) {
+  return function (matchProps) {
+    return <Component {...props} {...matchProps} />
+  }
+}
+
+function configureStore(initialState) {
+  const store = createStore(
+    reducer,
+    initialState
+  );
+  return store;
+};
+
 
 class Main extends React.Component {
   constructor() {
@@ -24,22 +41,19 @@ class Main extends React.Component {
   setMainState(state) {
     console.log(state)
     // provisional
-    /* this.setState( (currentState) => ({
-      ...currentState,
-      ...state
-    })) */
+    this.setState(state)
   }
 
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={App} state={this.state} setMainState={ (state) => this.setMainState(state)}>
-          <IndexRoute component={Dashboard} state={this.state} />
+        <Route path="/" component={withProps(App, { state: this.state, setMainState: (state) => this.setMainState(state) })}>
+          <IndexRoute component={withProps(Dashboard, { state: this.state })} />
         </Route>
       </Router>
     )
   }
 }
 
-ReactDOM.render((<Main/>), document.getElementById('app'));
+ReactDOM.render((<Main />), document.getElementById('app'));
 

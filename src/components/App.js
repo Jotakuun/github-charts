@@ -7,14 +7,13 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props.route.state
+      ...props.state
     }
   }
 
   setPickedRepos(repos) {
     console.log('repos', repos)
-    this.props.route.setMainState({
-      ...this.state,
+    this.props.setMainState({
       pickedRepos: repos
     })
   }

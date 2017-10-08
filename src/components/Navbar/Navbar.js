@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Navbar.css";
 
-export default class Navbar extends React.Component {
+class Navbar extends React.Component {
 
   constructor(props) {
     super(props);
@@ -13,7 +13,7 @@ export default class Navbar extends React.Component {
   }
 
   pickRepos() {
-    return  [
+    return [
       { author: 'facebook', name: 'react' },
       { author: 'angular', name: 'angular' },
       { author: 'vue', name: 'vue' }
@@ -27,3 +27,16 @@ export default class Navbar extends React.Component {
     );
   }
 }
+
+Navbar.propTypes = {
+  store: PropTypes.shape({
+    pickedRepos: PropTypes.arrayOf(
+      PropTypes.shape({
+        author: PropTypes.number.isRequired,
+        name: PropTypes.bool.isRequired,
+      }).isRequired
+    )
+  })
+}
+
+export default Navbar;
