@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Dashboard.css';
 import RadarChart from '../RadarChart/RadarChart';
 import PopularityChart from '../PopularityChart/PopularityChart';
+import { connect } from 'react-redux';
 
 import * as d3 from 'd3';
 
@@ -13,15 +14,9 @@ d3.request(apiHost + 'repos/facebook/react')
   .response((data) => JSON.parse(data.responseText))
   .get((res) => console.log(res));
 
-export default class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...props.state
-    };
-  }
+class Dashboard extends React.Component {
   render() {
-    const pickedRepos = this.state.pickedRepos.map((repo, index) => {
+    const pickedRepos = this.props.pickedRepos.map((repo, index) => {
       return(
         <li key={index}>author: {repo.author}  - name: {repo.name}</li>
       );
@@ -42,3 +37,13 @@ export default class Dashboard extends React.Component {
     );
   }
 }
+
+const mapStateToProps = ( state ) => ( {
+  repos: state.repos.data,
+  pickedRepos: state.repos.pickedRepos
+} );
+
+const mapDispatchToProps = {
+};
+
+export default connect( mapStateToProps )( Dashboard );

@@ -1,28 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Navbar from './Navbar/Navbar';
 
 import styles from './App.css';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...props.state
-    }
-  }
-
-  setPickedRepos(repos) {
-    console.log('repos', repos)
-    this.props.setMainState({
-      pickedRepos: repos
-    })
-  }
-
+class App extends React.Component {
   render(){
     return (
       <div className={styles.Container}>
         <header className={styles.Header}>
-          <Navbar getPickedRepos={ (repos) => this.setPickedRepos(repos) } />
+          <Navbar />
         </header>
         <div>
           {this.props.children}
@@ -31,3 +19,9 @@ export default class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = ( state ) => ( {
+  repos: state.repos.data,
+} );
+
+export default connect( mapStateToProps )( App );

@@ -1,15 +1,11 @@
-import React from "react";
-import styles from "./Navbar.css";
+import React from 'react';
+import { connect } from 'react-redux';
+import styles from './Navbar.css';
 
 class Navbar extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-  componentWillMount() {
-    if (this.props.getPickedRepos) {
-      this.props.getPickedRepos(this.pickRepos());
-    }
   }
 
   pickRepos() {
@@ -28,7 +24,7 @@ class Navbar extends React.Component {
   }
 }
 
-Navbar.propTypes = {
+/* Navbar.propTypes = {
   store: PropTypes.shape({
     pickedRepos: PropTypes.arrayOf(
       PropTypes.shape({
@@ -37,6 +33,10 @@ Navbar.propTypes = {
       }).isRequired
     )
   })
-}
+} */
 
-export default Navbar;
+const mapStateToProps = ( state ) => ( {
+  pickedRepos: state.repos.pickedRepos
+} );
+
+export default connect( mapStateToProps )( Navbar );

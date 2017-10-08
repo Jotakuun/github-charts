@@ -1,4 +1,4 @@
-import { combineReducers } from 'react-redux';
+import { combineReducers } from 'redux';
 import {
     GET_REPOS_INFO, GET_REPOS_INFO_SUCCESS, GET_REPOS_INFO_FAILURE,
     GET_RADAR_DATA, GET_RADAR_DATA_SUCCESS, GET_RADAR_DATA_FAILURE,
@@ -7,7 +7,10 @@ import {
 
 const initial = {
     repos: {
-        pickedRepos: [],
+        pickedRepos: [
+            { author: 'facebook', name: 'react' },
+            { author: 'angular', name: 'angular' }
+          ],
         data: '',
         loading: true
     },
@@ -39,7 +42,7 @@ function radar(state = initial.radar, { type, payload }) {
             return { ...state, loading: true};
         case GET_RADAR_DATA_SUCCESS:
             return { ...state, data: payload.data, loading: false};
-        case GET_RADAR_DATA_SUCESS:
+        case GET_RADAR_DATA_FAILURE:
             return { ...state, loading:false};
     }
     return state;
@@ -51,7 +54,7 @@ function popularity(state = initial.popularity, { type, payload }) {
             return { ...state, loading: true};
         case GET_POPULARITY_DATA_SUCCESS:
             return { ...state, data: payload.data, loading: false};
-        case GET_POPULARITY_DATA_SUCESS:
+        case GET_POPULARITY_DATA_FAILURE:
             return { ...state, loading:false};
     }
     return state;
