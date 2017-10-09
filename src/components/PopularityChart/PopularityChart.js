@@ -1,9 +1,10 @@
-import React from "react";
-import styles from "./PopularityChart.css";
+import React from 'react';
+import styles from './PopularityChart.css';
+import { connect } from 'react-redux'
 
 import Card from '../shared/Card/Card';
 
-export default class PopularityChart extends React.Component {
+class PopularityChart extends React.Component {
   render() {
     return (
       <Card>
@@ -14,3 +15,17 @@ export default class PopularityChart extends React.Component {
     );
   }
 }
+
+const mapStateToProps = ( state ) => ( {
+  repos: state.repos.data,
+  pickedRepos: state.repos.pickedRepos
+} );
+
+const mapDispatchToProps = {
+  getRadarData: data => {
+    dispatch(getRadarData(data))
+  }
+};
+
+export default connect( mapStateToProps, mapDispatchToProps )( PopularityChart );
+

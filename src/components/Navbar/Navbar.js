@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './Navbar.css';
+import PropTypes from 'prop-types';
 
 class Navbar extends React.Component {
 
@@ -18,13 +19,13 @@ class Navbar extends React.Component {
   render() {
     return (
       <nav className={styles.Navbar}>
-        <span >Nav</span>
+        <span>Nav</span>
       </nav>
     );
   }
 }
 
-/* Navbar.propTypes = {
+Navbar.propTypes = {
   store: PropTypes.shape({
     pickedRepos: PropTypes.arrayOf(
       PropTypes.shape({
@@ -33,7 +34,7 @@ class Navbar extends React.Component {
       }).isRequired
     )
   })
-} */
+}
 
 const mapStateToProps = ( state ) => ( {
   pickedRepos: state.repos.pickedRepos

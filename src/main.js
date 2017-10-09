@@ -13,9 +13,10 @@ import Dashboard from './components/Dashboard/Dashboard';
 // Base styling
 import './global.css';
 
-function configureStore() {
+function configureStore(initialState) {
   const store = createStore(
-    reducer
+    reducer,
+    initialState
   );
   return store;
 };
@@ -27,7 +28,7 @@ class Main extends React.Component {
 
   render() {
     return (
-      <Provider state={configureStore}>
+      <Provider store={configureStore()}>
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Dashboard} />

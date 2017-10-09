@@ -3,18 +3,19 @@ import styles from './Dashboard.css';
 import RadarChart from '../RadarChart/RadarChart';
 import PopularityChart from '../PopularityChart/PopularityChart';
 import { connect } from 'react-redux';
+import { apiHost, fetchRepoData } from '../../helpers';
 
 import * as d3 from 'd3';
 
-//provisional
-const apiHost = 'https:/api.github.com/';
-
-d3.request(apiHost + 'repos/facebook/react')
-  .mimeType("application/json")
-  .response((data) => JSON.parse(data.responseText))
-  .get((res) => console.log(res));
-
 class Dashboard extends React.Component {
+  componentWillMount(){
+    this.props.pickedRepos.forEach((repo) => {
+      d3.request(apiHost + `repos/${repo.author}/${repo.name}`)
+      .mimeType("application/json")
+      .response((data) => JSON.parse(data.responseText))
+      .get((res) => console.log(res));
+    });
+  }
   render() {
     const pickedRepos = this.props.pickedRepos.map((repo, index) => {
       return(

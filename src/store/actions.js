@@ -7,6 +7,9 @@ export const getReposInfo = createAction(GET_REPOS_INFO);
 export const getReposInfoSuccess = createAction(GET_REPOS_INFO_SUCCESS);
 export const getReposInfoFail = createAction(GET_REPOS_INFO_FAILURE);
 
+export const SET_REPOS = 'SET_REPOS';
+export const setRepos = createAction(SET_REPOS);
+
 export const GET_RADAR_DATA = 'GET_RADAR_DATA';
 export const GET_RADAR_DATA_SUCCESS = 'GET_RADAR_DATA_SUCCESS';
 export const GET_RADAR_DATA_FAILURE = 'GET_RADAR_DATA_FAILURE';
