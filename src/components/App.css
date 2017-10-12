@@ -1,0 +1,8 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+}
+
+.Header {
+    width: 100%;
+}
