@@ -16,13 +16,13 @@ class PopularityChart extends React.Component {
   }
 }
 
-const mapStateToProps = ( state ) => ( {
+const mapStateToProps = ( state ) => ({
   repos: state.repos.data,
   pickedRepos: state.repos.pickedRepos
-} );
+});
 
 const mapDispatchToProps = {
-  getRadarData: data => {
+  getRadarData(data) {
     dispatch(getRadarData(data))
   }
 };

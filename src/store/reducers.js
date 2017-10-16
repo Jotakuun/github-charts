@@ -12,7 +12,7 @@ const initial = {
             { author: 'facebook', name: 'react' },
             { author: 'angular', name: 'angular' }
         ],
-        data: '',
+        data: [],
         loading: true
     },
     radar: {
@@ -44,8 +44,9 @@ function radar(state = initial.radar, { type, payload }) {
     switch (type) {
         case GET_RADAR_DATA:
             return { ...state, loading: true };
-        case GET_RADAR_DATA_SUCCESS:
-            return { ...state, data: payload.data, loading: false };
+        case GET_RADAR_DATA_SUCCESS:{
+            return { ...state, data: [...state.data, payload], loading: false };
+        }
         case GET_RADAR_DATA_FAILURE:
             return { ...state, loading: false };
     }
