@@ -30,12 +30,12 @@ function repos(state = initial.repos, { type, payload }) {
         case GET_REPOS_INFO:
             return { ...state, loading: true };
         case GET_REPOS_INFO_SUCCESS:
-            return { ...state, data: payload.data, loading: false };
+            return { ...state, data: payload, loading: false };
         case GET_REPOS_INFO_FAILURE:
             return { ...state, loading: false };
 
         case SET_REPOS:
-            return { ...state, data: payload.data };
+            return { ...state, data: payload };
     }
     return state;
 }
@@ -45,7 +45,7 @@ function radar(state = initial.radar, { type, payload }) {
         case GET_RADAR_DATA:
             return { ...state, loading: true };
         case GET_RADAR_DATA_SUCCESS:{
-            return { ...state, data: [...state.data, payload], loading: false };
+            return { ...state, data: payload, loading: false };
         }
         case GET_RADAR_DATA_FAILURE:
             return { ...state, loading: false };

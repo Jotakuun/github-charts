@@ -1,4 +1,4 @@
-import { take, call, put, fork, race, select } from 'redux-saga/effects';
+import { take, takeEvery, takeLatest, call, put, fork, race, select } from 'redux-saga/effects';
 
 import {
     GET_REPOS_INFO, GET_REPOS_INFO_SUCCESS, GET_REPOS_INFO_FAILURE,
@@ -8,40 +8,46 @@ import {
 
 import { apiHost, fetchData } from '../helpers';
 
-function* getRadarData({ payload: { repos } }) {
+function* getRadarData() {
     try {
-        yield take(GET_REPOS_INFO_SUCCESS);
-        const repos = yield take((state) => state.repos.data);
+        yield take(GET_RADAR_DATA);
+        const repos = yield select((state) => state.repos.data);
+        let data = repos.map((data) => ({
+            name: data.name,
+            forks: data.forks_count,
+            stars: data.stargazers_count,
+            subscribers: data.subscribers_count,
+            open_issues: data.open_issues_count,
+            url: data.html_url
+        }));
+        yield put({ type: GET_RADAR_DATA_SUCCESS, payload: data });
     } catch (err) {
         yield put({ type: GET_RADAR_DATA_FAILURE, payload: err });
     }
-}
-
-function* setData() {
-    yield* takeEvery(GET_RADAR_DATA, getRadarData);
-    yield* takeEvery(GET_POPULARITY_DATA, getPopularityData);
 }
 
 function* getReposInfo() {
     yield take(GET_REPOS_INFO)
     try {
         const pickedRepos = yield select((state) => state.repos.pickedRepos);
-        const data = yield call(apiRequests, pickedRepos);
+        const data = yield call(fetchReposData, pickedRepos);
         yield put({ type: GET_REPOS_INFO_SUCCESS, payload: data });
+        yield put({ type: GET_RADAR_DATA, payload: data })
     } catch (err) {
         yield put({ type: GET_REPOS_INFO_FAILURE, payload: err });
     }
 }
 
-function apiRequests(reposPicked) {
-    let requestPromises = reposPicked.map((repo) =>{
+function fetchReposData(reposPicked) {
+    let requestPromises = reposPicked.map((repo) => {
         return fetchData(apiHost + `repos/${repo.author}/${repo.name}`);
     })
     return Promise.all(requestPromises).then((data) => data)
 }
 
 export default function* rootSaga() {
-    yield fork(getReposInfo);
-
-    // yield fork(setData);
+    yield [
+        yield fork(getReposInfo),
+        yield takeLatest(GET_REPOS_INFO_SUCCESS, getRadarData)
+    ]
 }
