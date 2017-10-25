@@ -27,6 +27,7 @@
     "react-router": "^2.0.0",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
+    "redux-devtools-extension": "^2.13.2",
     "redux-saga": "^0.15.6"
   },
   "devDependencies": {

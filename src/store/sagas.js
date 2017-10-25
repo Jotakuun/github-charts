@@ -18,6 +18,7 @@ function* getRadarData() {
             stars: data.stargazers_count,
             subscribers: data.subscribers_count,
             open_issues: data.open_issues_count,
+            network: data.network_count,
             url: data.html_url
         }));
         yield put({ type: GET_RADAR_DATA_SUCCESS, payload: data });
