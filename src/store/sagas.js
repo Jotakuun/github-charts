@@ -12,6 +12,7 @@ function* getRadarData() {
     try {
         yield take(GET_RADAR_DATA);
         const repos = yield select((state) => state.repos.data);
+
         let data = repos.map((data) => ({
             name: data.name,
             forks: data.forks_count,
@@ -21,7 +22,16 @@ function* getRadarData() {
             network: data.network_count,
             url: data.html_url
         }));
-        yield put({ type: GET_RADAR_DATA_SUCCESS, payload: data });
+        
+        let dataInAxis = [
+            { axis: 'forks', value: data.forks},
+            { axis: 'stars', value: data.stars},
+            { axis: 'subscribers', value: data.subscribers},
+            { axis: 'open_issues', value: data.open_issues},
+            { axis: 'network', value: data.network}      
+          ];
+
+        yield put({ type: GET_RADAR_DATA_SUCCESS, payload: {data: data, axis: dataInAxis} });
     } catch (err) {
         yield put({ type: GET_RADAR_DATA_FAILURE, payload: err });
     }

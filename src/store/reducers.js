@@ -13,6 +13,7 @@ const initial = {
             { author: 'angular', name: 'angular' }
         ],
         data: [],
+        axis: [],
         loading: true
     },
     radar: {
@@ -45,7 +46,7 @@ function radar(state = initial.radar, { type, payload }) {
         case GET_RADAR_DATA:
             return { ...state, loading: true };
         case GET_RADAR_DATA_SUCCESS:{
-            return { ...state, data: payload, loading: false };
+            return { ...state, data: payload.data, axis: payload.axis, loading: false };
         }
         case GET_RADAR_DATA_FAILURE:
             return { ...state, loading: false };
