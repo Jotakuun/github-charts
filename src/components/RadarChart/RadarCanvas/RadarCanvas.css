@@ -1,0 +1,16 @@
+.RadarCanvas {
+
+    &__Levels {
+        stroke: blue;
+        stroke-opacity: 0.75;
+        stroke-width: 0.3px;
+    }
+    &__Legend {
+        font-size: 14px;
+        fill: #737373;
+    }
+    &__Axes {
+        stroke: #737373;
+        stroke-width: 0.3px;
+    }
+}

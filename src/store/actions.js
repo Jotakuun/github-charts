@@ -23,3 +23,7 @@ export const GET_POPULARITY_DATA_FAILURE = 'GET_POPULARITY_DATA_FAILURE';
 export const getPopularityData = createAction(GET_POPULARITY_DATA);
 export const getPopularityDataSuccess = createAction(GET_POPULARITY_DATA_SUCCESS);
 export const getPopularityDataFail = createAction(GET_POPULARITY_DATA_FAILURE);
+
+// test
+export const CHANGE_AXIS = 'CHANGE_AXIS';
+export const changeAxis = createAction(CHANGE_AXIS);
