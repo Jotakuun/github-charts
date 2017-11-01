@@ -15,7 +15,8 @@ class RadarChart extends React.Component {
     this.canvas = {
       width: 400,
       height: 400,
-      levels: 4
+      levels: 4,
+      maxValue: 16000
     };
     this.canvasRadius = Math.min(this.canvas.width / 2, this.canvas.height / 2);
     this.canvasSegments = [];
@@ -24,18 +25,51 @@ class RadarChart extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.axis !== this.props.axis) {
-      this.createCanvasSegments(nextProps.axis);
+      this.createCanvasSegments(nextProps.axis[0]);
+      this.drawData(nextProps.axis);
     }
   }
 
-  createReactCanvas() {
+  drawData(data) {
+    d3.select(".radarData").remove();
+
+    const canvas = d3
+      .select('.radarCanvas');
+
+    const color = d3.scaleOrdinal()
+      .range(["#ED809F", "#80EDC"]);
+
+    const rScale = d3.scaleLinear()
+      .range([0, this.canvasRadius])
+      .domain([0, this.canvas.maxValue]);
+      
+
+    const angleSlice = Math.PI * 2 / data[0].length;
+
+    const radarLine = d3.radialLine()
+      .curve(d3.curveLinearClosed)
+      .radius(d => rScale(d.value))
+      .angle((d, i) => i * angleSlice);
+
+    const polygon = canvas.selectAll('.radarCanvas')
+      .data(data)
+      .enter().append('g')
+      .attr('class', 'radarWrapper')
+      .style('transform', `translate(${this.canvas.width/2}px,${this.canvas.height/2}px)`);
+
+      polygon
+      .append('path')
+      .attr('class', 'radarArea')
+      .attr('d', (d, i) => radarLine(d))
+      .style('fill', 'blue')
+      .style('fill-opacity', 0.3);
 
   }
 
   createCanvasSegments(axis) {
     this.canvasSegments = [];
     this.canvasLevelsText = [];
-    const canvasRadius = Math.min(this.canvas.width / 2, this.canvas.height / 2);
+    const canvasRadius = this.canvasRadius;
     //canvas segments
     for (let i = 0; i < this.canvas.levels; i++) {
       axis.forEach((data, index) => {
@@ -62,17 +96,17 @@ class RadarChart extends React.Component {
         translateY: ((this.canvas.height / 2) - levelFactor)
       })
     }
-    
+
   }
   render() {
     const radians = 2 * Math.PI;
     let lines = [];
     if (this.props.axis) {
-      lines = this.props.axis.map((axis, i) => ({
+      lines = this.props.axis[0].map((axis, i) => ({
         x1: this.canvas.width / 2,
         y1: this.canvas.height / 2,
-        x2: this.canvas.width / 2 * (1 - 1 * Math.sin(i * radians / this.props.axis.length)),
-        y2: this.canvas.height / 2 * (1 - 1 * Math.cos(i * radians / this.props.axis.length))
+        x2: this.canvas.width / 2 * (1 - 1 * Math.sin(i * radians / this.props.axis[0].length)),
+        y2: this.canvas.height / 2 * (1 - 1 * Math.cos(i * radians / this.props.axis[0].length))
       }));
     }
     return (
@@ -80,7 +114,7 @@ class RadarChart extends React.Component {
         <div className={styles.RadarChart}>
           <h1>RadarChart_component</h1>
           <div className={styles.RadarChart__Canvas}>
-            <RadarCanvas width={this.canvas.width} height={this.canvas.height} lines={lines} segments={this.canvasSegments} levelsText={this.canvasLevelsText}/>
+            <RadarCanvas width={this.canvas.width} height={this.canvas.height} lines={lines} segments={this.canvasSegments} levelsText={this.canvasLevelsText} />
           </div>
           <button onClick={this.props.changeAxis}>change axis</button>
         </div>

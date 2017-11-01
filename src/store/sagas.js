@@ -23,13 +23,13 @@ function* getRadarData() {
             url: data.html_url
         }));
         
-        let dataInAxis = [
-            { axis: 'forks', value: data.forks},
-            { axis: 'stars', value: data.stars},
-            { axis: 'subscribers', value: data.subscribers},
-            { axis: 'open_issues', value: data.open_issues},
-            { axis: 'network', value: data.network}      
-          ];
+        let dataInAxis = data.map((d) =>  ([
+            { axis: 'forks', value: d.forks},
+            // { axis: 'stars', value: d.stars},
+            { axis: 'subscribers', value: d.subscribers},
+            { axis: 'open_issues', value: d.open_issues},
+            { axis: 'network', value: d.network}      
+        ]));
 
         yield put({ type: GET_RADAR_DATA_SUCCESS, payload: {data: data, axis: dataInAxis} });
     } catch (err) {

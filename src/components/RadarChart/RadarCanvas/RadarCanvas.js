@@ -6,12 +6,6 @@ export class RadarCanvas extends React.Component {
         super(props);
     }
 
-    componentDidMount(){
-        console.log(this.props)
-    }
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
-    }
     render() {
         let segments = this.props.segments.map((line, index) => {
             return(
@@ -36,7 +30,7 @@ export class RadarCanvas extends React.Component {
             )
         })
         return (
-            <svg width={this.props.width} height={this.props.height}>
+            <svg className="radarCanvas" width={this.props.width} height={this.props.height}>
                 <g transform="translate(0,0)">
                     {segments}
                     {levelsText}

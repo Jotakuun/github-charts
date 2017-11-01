@@ -51,7 +51,9 @@ function radar(state = initial.radar, { type, payload }) {
         case GET_RADAR_DATA_FAILURE:
             return { ...state, loading: false };
         case CHANGE_AXIS:
-            return { ...state, axis: state.axis.filter((axis) => axis.axis !== 'network')}
+            return { ...state,
+                axis: state.axis.map((d) => d.filter((axis) => axis.axis !== 'network'))
+            }
     }
     return state;
 }
