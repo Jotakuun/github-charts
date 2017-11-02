@@ -9,7 +9,6 @@ class PopularityChart extends React.Component {
     return (
       <Card>
         <div className={styles.PopularityChart}>
-          <h1>PopularityChart_component</h1>
         </div>
       </Card>
     );

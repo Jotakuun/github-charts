@@ -31,23 +31,18 @@ class RadarChart extends React.Component {
   }
 
   drawData(data) {
-    d3.select(".radarData").remove();
+    d3.selectAll(".radarWrapper").remove();
 
     const canvas = d3
       .select('.radarCanvas');
 
-    const color = d3.scaleOrdinal()
-      .range(["#ED809F", "#80EDC"]);
-
     const rScale = d3.scaleLinear()
       .range([0, this.canvasRadius])
       .domain([0, this.canvas.maxValue]);
-      
 
     const angleSlice = Math.PI * 2 / data[0].length;
 
     const radarLine = d3.radialLine()
-      .curve(d3.curveLinearClosed)
       .radius(d => rScale(d.value))
       .angle((d, i) => i * angleSlice);
 
@@ -55,14 +50,24 @@ class RadarChart extends React.Component {
       .data(data)
       .enter().append('g')
       .attr('class', 'radarWrapper')
-      .style('transform', `translate(${this.canvas.width/2}px,${this.canvas.height/2}px)`);
+      .style('transform', `translate(${this.canvas.width / 2}px,${this.canvas.height / 2}px)`);
 
-      polygon
+    polygon
       .append('path')
       .attr('class', 'radarArea')
       .attr('d', (d, i) => radarLine(d))
-      .style('fill', 'blue')
-      .style('fill-opacity', 0.3);
+      .style('fill', (d, i) => d[0].color)
+      .style('fill-opacity', 0.5);
+
+    polygon.selectAll(".radarCircle")
+      .data((d, i) => d)
+      .enter().append("circle")
+      .attr("class", "edgeCircle")
+      .attr("r", 4)
+      .attr("cx", (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr("cy", (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
+      .style("fill", (d) => d.color)
+      .style("fill-opacity", 0.6);
 
   }
 
@@ -89,7 +94,7 @@ class RadarChart extends React.Component {
     for (let i = 0; i < this.canvas.levels; i++) {
       let levelFactor = canvasRadius * ((i + 1) / this.canvas.levels);
       this.canvasLevelsText.push({
-        value: ((i + 1) * 100 / this.canvas.levels).toFixed(0),
+        value: ((i + 1) * this.canvas.maxValue / this.canvas.levels).toFixed(0),
         x: levelFactor * (1 - 1 * Math.sin(0)),
         y: levelFactor * (1 - 1 * Math.cos(0)),
         translateX: ((this.canvas.width / 2) - (levelFactor - 5)),
@@ -112,7 +117,6 @@ class RadarChart extends React.Component {
     return (
       <Card>
         <div className={styles.RadarChart}>
-          <h1>RadarChart_component</h1>
           <div className={styles.RadarChart__Canvas}>
             <RadarCanvas width={this.canvas.width} height={this.canvas.height} lines={lines} segments={this.canvasSegments} levelsText={this.canvasLevelsText} />
           </div>

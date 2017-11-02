@@ -8,30 +8,33 @@ import {
 
 import { apiHost, fetchData } from '../helpers';
 
+const colors = ["#9780ED", "#80EDCE"];
+
 function* getRadarData() {
     try {
         yield take(GET_RADAR_DATA);
         const repos = yield select((state) => state.repos.data);
 
-        let data = repos.map((data) => ({
+        let data = repos.map((data, i) => ({
             name: data.name,
             forks: data.forks_count,
             stars: data.stargazers_count,
             subscribers: data.subscribers_count,
             open_issues: data.open_issues_count,
             network: data.network_count,
-            url: data.html_url
+            url: data.html_url,
+            color: colors[i]
         }));
-        
-        let dataInAxis = data.map((d) =>  ([
-            { axis: 'forks', value: d.forks},
-            // { axis: 'stars', value: d.stars},
-            { axis: 'subscribers', value: d.subscribers},
-            { axis: 'open_issues', value: d.open_issues},
-            { axis: 'network', value: d.network}      
+
+        let dataInAxis = data.map((d) => ([
+            { axis: 'forks', value: d.forks, color: d.color },
+            // { axis: 'stars', value: d.stars, color: d.color},
+            { axis: 'subscribers', value: d.subscribers, color: d.color },
+            { axis: 'open_issues', value: d.open_issues, color: d.color },
+            { axis: 'network', value: d.network, color: d.color }
         ]));
 
-        yield put({ type: GET_RADAR_DATA_SUCCESS, payload: {data: data, axis: dataInAxis} });
+        yield put({ type: GET_RADAR_DATA_SUCCESS, payload: { data: data, axis: dataInAxis } });
     } catch (err) {
         yield put({ type: GET_RADAR_DATA_FAILURE, payload: err });
     }
