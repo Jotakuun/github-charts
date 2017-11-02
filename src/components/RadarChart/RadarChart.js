@@ -16,7 +16,8 @@ class RadarChart extends React.Component {
       width: 400,
       height: 400,
       levels: 4,
-      maxValue: 16000
+      maxValue: 16000,
+      margin: 50
     };
     this.canvasRadius = Math.min(this.canvas.width / 2, this.canvas.height / 2);
     this.canvasSegments = [];
@@ -43,6 +44,7 @@ class RadarChart extends React.Component {
     const angleSlice = Math.PI * 2 / data[0].length;
 
     const radarLine = d3.radialLine()
+      .curve(d3.curveLinearClosed)
       .radius(d => rScale(d.value))
       .angle((d, i) => i * angleSlice);
 
@@ -52,12 +54,18 @@ class RadarChart extends React.Component {
       .attr('class', 'radarWrapper')
       .style('transform', `translate(${this.canvas.width / 2}px,${this.canvas.height / 2}px)`);
 
-    polygon
-      .append('path')
+    polygon.append('path')
       .attr('class', 'radarArea')
       .attr('d', (d, i) => radarLine(d))
       .style('fill', (d, i) => d[0].color)
       .style('fill-opacity', 0.5);
+
+    polygon.append("path")
+      .attr("class", "radarStroke")
+      .attr("d", (d, i) => radarLine(d))
+      .style("stroke-width", 2+ "px")
+      .style("stroke", (d) => d[0].color)
+      .style("fill", "none");
 
     polygon.selectAll(".radarCircle")
       .data((d, i) => d)
@@ -67,8 +75,7 @@ class RadarChart extends React.Component {
       .attr("cx", (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
       .attr("cy", (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
       .style("fill", (d) => d.color)
-      .style("fill-opacity", 0.6);
-
+      .style("fill-opacity", 1);
   }
 
   createCanvasSegments(axis) {

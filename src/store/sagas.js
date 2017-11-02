@@ -8,7 +8,7 @@ import {
 
 import { apiHost, fetchData } from '../helpers';
 
-const colors = ["#9780ED", "#80EDCE"];
+import { colors } from '../helpers';
 
 function* getRadarData() {
     try {

@@ -1,0 +1,20 @@
+.RepoCard {
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+    &__Title {
+        margin: 10px 0;
+    }
+    &__Name {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    &__Author {
+        font-size: 16px;
+    }
+    &__Homepage {
+        color: #52C5FF;
+        font-decoration: none;
+    }
+}
