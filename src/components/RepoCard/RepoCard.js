@@ -6,7 +6,7 @@ import Card from '../shared/Card/Card';
 export default class RepoCard extends React.Component {
     render() {
 
-        let homepageShortcut = this.props.repo.homepage.slice(this.props.repo.homepage.lastIndexOf('/') + 1);
+        let homepageShortcut = this.props.repo.homepage ? this.props.repo.homepage.slice(this.props.repo.homepage.lastIndexOf('/') + 1): undefined;
         return (
             <Card>
                 <div className={styles.RepoCard}

@@ -3,7 +3,8 @@
   &__Container {
     display: flex;
     flex-flow: row wrap;
-    padding: 20px 0;
+    padding: 20px 5%;
+    margin: 0 auto;
   }
   &__Aside {
     width: 450px;

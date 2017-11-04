@@ -19,7 +19,8 @@ export class RadarCanvas extends React.Component {
             return(
                 <line key={'axisline'+index} className={styles.RadarCanvas__Axes} 
                 x1={line.x1} y1={line.y1}
-                x2={line.x2} y2={line.y2}/>
+                x2={line.x2} y2={line.y2}
+                transform={'translate(' + line.translateX +',' + line.translateY + ')' }/>
             )
         });
         let levelsText = this.props.levelsText.map((value, index) => {

@@ -10,7 +10,8 @@ const initial = {
     repos: {
         pickedRepos: [
             { author: 'facebook', name: 'react', color: '#9780ED' },
-            { author: 'angular', name: 'angular', color: '#80EDCE' }
+            { author: 'angular', name: 'angular', color: '#80EDCE' },
+            { author: 'vuejs', name: 'vue', color: '#90D492' }
         ],
         data: [],
         axis: [],

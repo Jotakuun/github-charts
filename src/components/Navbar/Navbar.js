@@ -12,8 +12,7 @@ class Navbar extends React.Component {
   pickRepos() {
     return [
       { author: 'facebook', name: 'react' },
-      { author: 'angular', name: 'angular' },
-      { author: 'vue', name: 'vue' }
+      { author: 'angular', name: 'angular' }
     ]
   }
   render() {
