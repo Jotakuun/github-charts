@@ -27,14 +27,17 @@ function* getRadarData() {
         }));
 
         let dataInAxis = data.map((d) => ([
-            { axis: 'forks', value: d.forks, color: d.color },
-            // { axis: 'stars', value: d.stars, color: d.color},
-            { axis: 'subscribers', value: d.subscribers, color: d.color },
-            { axis: 'open_issues', value: d.open_issues, color: d.color },
-            { axis: 'network', value: d.network, color: d.color }
+            { axis: 'Forks', value: d.forks, color: d.color },
+            // { axis: 'Stars', value: d.stars, color: d.color},
+            { axis: 'Subscribers', value: d.subscribers, color: d.color },
+            { axis: 'Open Issues', value: d.open_issues, color: d.color },
+            { axis: 'Network', value: d.network, color: d.color }
         ]));
 
-        yield put({ type: GET_RADAR_DATA_SUCCESS, payload: { data: data, axis: dataInAxis } });
+        let radarOptions = dataInAxis[0].map((axis) => axis.axis);
+        radarOptions = ['Overall', 'Stars', ...radarOptions]
+
+        yield put({ type: GET_RADAR_DATA_SUCCESS, payload: { data: data, axis: dataInAxis, radarOptions: radarOptions } });
     } catch (err) {
         yield put({ type: GET_RADAR_DATA_FAILURE, payload: err });
     }

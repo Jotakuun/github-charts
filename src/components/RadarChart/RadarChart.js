@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { changeAxis } from '../../store/actions';
 
 import { RadarCanvas } from './RadarCanvas/RadarCanvas';
+import RadarOptions from './RadarOptions/RadarOptions';
 
 import * as d3 from 'd3';
 
@@ -147,6 +148,9 @@ class RadarChart extends React.Component {
     return (
       <Card>
         <div className={styles.RadarChart}>
+          <div>
+            <RadarOptions />
+          </div>
           <div className={styles.RadarChart__Canvas}>
             <RadarCanvas width={(this.canvas.width + this.canvas.margin)}
               height={(this.canvas.height + this.canvas.margin)}
@@ -155,7 +159,6 @@ class RadarChart extends React.Component {
               levelsText={this.canvasLevelsText}
               axisText={this.canvasAxisText} />
           </div>
-          <button onClick={this.props.changeAxis}>change axis</button>
         </div>
       </Card>
     );
@@ -173,6 +176,6 @@ const mapDispatchToProps = (dispatch) => ({
   changeAxis() {
     dispatch(changeAxis({}))
   }
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(RadarChart);

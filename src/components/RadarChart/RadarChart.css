@@ -2,9 +2,11 @@
   margin-top: 20px;
   background: #fff;
   padding: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
   &__Canvas {
     margin-top: 10px;
-    width: 100%;
     height: 500px;
   }
 }

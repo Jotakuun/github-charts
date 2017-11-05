@@ -1,0 +1,29 @@
+.RadarOptions {
+    margin-top: 30px;
+    &__Title {
+        font-size: 22px;
+        color: #404040;
+        text-transform: uppercase;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    &__Tag {
+        display: inline-block;
+        border: 1px solid #f5f5f5;
+        border-radius: 25px;
+        margin: 0 auto;
+        margin-top: 10px;
+        font-size: 13px;
+        float: left;
+        clear: both;
+        padding: 2px 15px;
+        transition: .1s all ease-in-out;
+        user-select: none;
+        &:hover{
+            transition: .1s all ease;
+            background: #f5f5f5;
+        }
+    }
+}

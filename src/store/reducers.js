@@ -14,11 +14,12 @@ const initial = {
             { author: 'vuejs', name: 'vue', color: '#90D492' }
         ],
         data: [],
-        axis: [],
         loading: true
     },
     radar: {
         data: [],
+        radarOptions: ['Overall'],
+        optionSelected: 'Overall',
         loading: true
     },
     popularity: {
@@ -46,14 +47,21 @@ function radar(state = initial.radar, { type, payload }) {
     switch (type) {
         case GET_RADAR_DATA:
             return { ...state, loading: true };
-        case GET_RADAR_DATA_SUCCESS:{
-            return { ...state, data: payload.data, axis: payload.axis, loading: false };
+        case GET_RADAR_DATA_SUCCESS: {
+            return {
+                ...state,
+                data: payload.data,
+                axis: payload.axis,
+                radarOptions: payload.radarOptions,
+                loading: false
+            };
         }
         case GET_RADAR_DATA_FAILURE:
             return { ...state, loading: false };
         case CHANGE_AXIS:
-            return { ...state,
-                axis: state.axis.map((d) => d.filter((axis) => axis.axis !== 'network'))
+            return {
+                ...state,
+                axis: state.axis.map((d) => d.filter((axis) => axis.axis !== 'Network'))
             }
     }
     return state;

@@ -18,7 +18,7 @@ class Navbar extends React.Component {
   render() {
     return (
       <nav className={styles.Navbar}>
-        <span>Nav</span>
+        <span></span>
         <span>In early development</span>
       </nav>
     );
