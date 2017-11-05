@@ -5,9 +5,15 @@
         stroke-opacity: 0.75;
         stroke-width: 0.3px;
     }
-    &__Legend {
+    &__LevelsText {
         font-size: 11px;
         fill: #737373;
+    }
+    &__AxisText {
+        font-size: 14px;
+        font-weight: bold;
+        fill: #737373;
+        text-anchor: middle;
     }
     &__Axes {
         stroke: #737373;
