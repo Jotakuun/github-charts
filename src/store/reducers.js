@@ -3,7 +3,7 @@ import {
     GET_REPOS_INFO, GET_REPOS_INFO_SUCCESS, GET_REPOS_INFO_FAILURE,
     GET_RADAR_DATA, GET_RADAR_DATA_SUCCESS, GET_RADAR_DATA_FAILURE,
     GET_POPULARITY_DATA, GET_POPULARITY_DATA_SUCCESS, GET_POPULARITY_DATA_FAILURE,
-    SET_REPOS, CHANGE_AXIS
+    SET_REPOS, SET_RADAR_OPTION, SET_RADAR_OPTION_SUCCESS
 } from './actions';
 
 const initial = {
@@ -58,10 +58,11 @@ function radar(state = initial.radar, { type, payload }) {
         }
         case GET_RADAR_DATA_FAILURE:
             return { ...state, loading: false };
-        case CHANGE_AXIS:
+        case SET_RADAR_OPTION:
+            return { ...state, optionSelected: payload };
+        case SET_RADAR_OPTION_SUCCESS: 
             return {
-                ...state,
-                axis: state.axis.map((d) => d.filter((axis) => axis.axis !== 'Network'))
+                ...state
             }
     }
     return state;

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styles from './RadarOptions.css';
 
+import { setRadarOption } from '../../../store/actions';
+
 class RadarOptions extends React.Component {
     constructor(props) {
         super(props);
@@ -12,7 +14,8 @@ class RadarOptions extends React.Component {
             return (
                 <li className={styles.RadarOptions__Tag}
                     style={this.props.selected === opt ? { backgroundColor: '#f5f5f5', borderColor: '#f5f5f5' } : undefined}
-                    key={'radar-option-' + i}>
+                    key={'radar-option-' + i}
+                    onClick={() => this.props.selectOption(opt)}>
                     {opt}
                 </li>
             )
@@ -34,9 +37,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    selectOption(selected) {
-        dispatch(action(selected))
+    selectOption: (selected) => {
+        dispatch(setRadarOption(selected))
     }
 });
 
-export default connect(mapStateToProps)(RadarOptions);
+export default connect(mapStateToProps, mapDispatchToProps)(RadarOptions);

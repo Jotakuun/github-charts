@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './RadarChart.css';
 import Card from '../shared/Card/Card';
 import { connect } from 'react-redux';
-import { changeAxis } from '../../store/actions';
 
 import { RadarCanvas } from './RadarCanvas/RadarCanvas';
 import RadarOptions from './RadarOptions/RadarOptions';
@@ -172,10 +171,4 @@ const mapStateToProps = (state) => ({
   axis: state.radar.axis
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  changeAxis() {
-    dispatch(changeAxis({}))
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RadarChart);
+export default connect(mapStateToProps)(RadarChart);
