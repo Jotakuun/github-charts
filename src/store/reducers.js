@@ -62,7 +62,8 @@ function radar(state = initial.radar, { type, payload }) {
             return { ...state, optionSelected: payload };
         case SET_RADAR_OPTION_SUCCESS: 
             return {
-                ...state
+                ...state,
+                axis: payload.axis
             }
     }
     return state;
