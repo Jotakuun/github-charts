@@ -14,6 +14,7 @@ const initial = {
             { author: 'vuejs', name: 'vue', color: '#90D492' }
         ],
         data: [],
+        suggestions: [],
         loading: true
     },
     radar: {
