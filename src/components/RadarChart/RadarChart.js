@@ -16,7 +16,7 @@ class RadarChart extends React.Component {
       width: 400,
       height: 400,
       levels: 4,
-      maxValue: 16000,
+      maxValue: 0,
       margin: 200
     };
     this.canvasRadius = Math.min((this.canvas.width - this.canvas.margin / 2) / 2, (this.canvas.height - this.canvas.margin / 2) / 2);
@@ -26,10 +26,15 @@ class RadarChart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.axis !== this.props.axis) {
-      this.createCanvasSegments(nextProps.axis[0]);
-      this.drawData(nextProps.axis);
-    }
+      if (nextProps.axis !== this.props.axis) {
+        // recalculate maxValue
+          this.canvas.maxValue = d3.max(nextProps.axis, (i) => {
+            return d3.max(i.map(axis => axis.value))
+          });
+        
+        this.createCanvasSegments(nextProps.axis[0]);
+        this.drawData(nextProps.axis);
+      }
   }
 
   drawData(data) {

@@ -28,7 +28,6 @@ function* getRadarData() {
 
         let dataInAxis = data.map((d) => ([
             { axis: 'Forks', value: d.forks, color: d.color },
-            // { axis: 'Stars', value: d.stars, color: d.color},
             { axis: 'Subscribers', value: d.subscribers, color: d.color },
             { axis: 'Open Issues', value: d.open_issues, color: d.color },
             { axis: 'Network', value: d.network, color: d.color }
@@ -49,14 +48,13 @@ function* radarOptions() {
 
     let changeDataInAxis;
 
-    if(option !== 'Overall') {
-        changeDataInAxis = radarData.map((d) => {
-            return pickedRepos.map((repo) => ({
-                axis: repo.name,
-                value: d[option.toLowerCase()],
-                color: repo.color
-            }));
-        });
+    if (option !== 'Overall') {
+        changeDataInAxis = radarData.map((d) => ({
+            axis: d.name,
+            value: d[option.toLowerCase().replace(/ /g, "_")],
+            color: '#258ECF'
+        }));
+        changeDataInAxis = [changeDataInAxis];
     } else {
         changeDataInAxis = radarData.map((d) => ([
             { axis: 'Forks', value: d.forks, color: d.color },

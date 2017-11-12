@@ -19,7 +19,7 @@ class Navbar extends React.Component {
     return (
       <nav className={styles.Navbar}>
         <span></span>
-        <span>In early development</span>
+        <span>In development</span>
       </nav>
     );
   }
