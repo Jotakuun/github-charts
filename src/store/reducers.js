@@ -3,7 +3,9 @@ import {
     GET_REPOS_INFO, GET_REPOS_INFO_SUCCESS, GET_REPOS_INFO_FAILURE,
     GET_RADAR_DATA, GET_RADAR_DATA_SUCCESS, GET_RADAR_DATA_FAILURE,
     GET_POPULARITY_DATA, GET_POPULARITY_DATA_SUCCESS, GET_POPULARITY_DATA_FAILURE,
-    SET_REPOS, SET_RADAR_OPTION, SET_RADAR_OPTION_SUCCESS
+    SET_RADAR_OPTION, SET_RADAR_OPTION_SUCCESS,
+    SEARCH_REPOS, SEARCH_REPOS_SUCCESS, SEARCH_REPOS_FAILURE,
+    CLEAN_SEARCH
 } from './actions';
 
 const initial = {
@@ -38,8 +40,14 @@ function repos(state = initial.repos, { type, payload }) {
         case GET_REPOS_INFO_FAILURE:
             return { ...state, loading: false };
 
-        case SET_REPOS:
-            return { ...state, data: payload };
+        case SEARCH_REPOS:
+            return { ...state };
+        case SEARCH_REPOS_SUCCESS:
+            return { ...state, suggestions: payload };
+        case SEARCH_REPOS_FAILURE:
+            return { ...state, error: payload};
+        case CLEAN_SEARCH:
+            return { ...state, suggestions: [] };
     }
     return state;
 }
@@ -61,7 +69,7 @@ function radar(state = initial.radar, { type, payload }) {
             return { ...state, loading: false };
         case SET_RADAR_OPTION:
             return { ...state, optionSelected: payload };
-        case SET_RADAR_OPTION_SUCCESS: 
+        case SET_RADAR_OPTION_SUCCESS:
             return {
                 ...state,
                 axis: payload.axis

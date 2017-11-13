@@ -3,7 +3,9 @@ import { take, takeEvery, takeLatest, call, put, fork, race, select } from 'redu
 import {
     GET_REPOS_INFO, GET_REPOS_INFO_SUCCESS, GET_REPOS_INFO_FAILURE,
     GET_RADAR_DATA, GET_RADAR_DATA_SUCCESS, GET_RADAR_DATA_FAILURE,
-    GET_POPULARITY_DATA, GET_POPULARITY_DATA_SUCCESS, GET_POPULARITY_DATA_FAILURE, SET_RADAR_OPTION_SUCCESS, SET_RADAR_OPTION
+    GET_POPULARITY_DATA, GET_POPULARITY_DATA_SUCCESS, GET_POPULARITY_DATA_FAILURE,
+    SET_RADAR_OPTION_SUCCESS, SET_RADAR_OPTION,
+    SEARCH_REPOS, SEARCH_REPOS_SUCCESS, SEARCH_REPOS_FAILURE, CLEAN_SEARCH
 } from './actions';
 
 import { apiHost, fetchData } from '../helpers';
@@ -79,6 +81,19 @@ function* getReposInfo() {
     }
 }
 
+function* getReposSuggestions(action) {
+    try {
+        const response = yield call(hello, action.payload);
+        yield put({type: SEARCH_REPOS_SUCCESS, payload: response.items});
+
+    } catch (err) {
+        yield put({ type: SEARCH_REPOS_FAILURE, payload: err });
+    }
+}
+function hello(value){
+    return fetchData(apiHost + `search/repositories?q=${value}`);
+}
+
 function fetchReposData(reposPicked) {
     let requestPromises = reposPicked.map((repo) => {
         return fetchData(apiHost + `repos/${repo.author}/${repo.name}`);
@@ -90,6 +105,7 @@ export default function* rootSaga() {
     yield [
         yield fork(getReposInfo),
         yield takeLatest(GET_REPOS_INFO_SUCCESS, getRadarData),
-        yield takeLatest(SET_RADAR_OPTION, radarOptions)
+        yield takeLatest(SET_RADAR_OPTION, radarOptions),
+        yield takeLatest(SEARCH_REPOS, getReposSuggestions)
     ]
 }

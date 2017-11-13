@@ -8,9 +8,6 @@ export const getReposInfo = createAction(GET_REPOS_INFO);
 export const getReposInfoSuccess = createAction(GET_REPOS_INFO_SUCCESS);
 export const getReposInfoFail = createAction(GET_REPOS_INFO_FAILURE);
 
-export const SET_REPOS = 'SET_REPOS';
-export const setRepos = createAction(SET_REPOS);
-
 // RadarChart Actions
 export const GET_RADAR_DATA = 'GET_RADAR_DATA';
 export const GET_RADAR_DATA_SUCCESS = 'GET_RADAR_DATA_SUCCESS';
@@ -30,4 +27,14 @@ export const GET_POPULARITY_DATA_FAILURE = 'GET_POPULARITY_DATA_FAILURE';
 export const getPopularityData = createAction(GET_POPULARITY_DATA);
 export const getPopularityDataSuccess = createAction(GET_POPULARITY_DATA_SUCCESS);
 export const getPopularityDataFail = createAction(GET_POPULARITY_DATA_FAILURE);
+
+// Search Actions
+export const SEARCH_REPOS = 'SEARCH_REPOS';
+export const SEARCH_REPOS_SUCCESS = 'SEARCH_REPOS_SUCCESS';
+export const SEARCH_REPOS_FAILURE = 'SEARCH_REPOS_FAILURE';
+export const searchRepos = createAction(SEARCH_REPOS);
+export const searchReposSuccess = createAction(SEARCH_REPOS_SUCCESS);
+export const searchReposFailure = createAction(SEARCH_REPOS_FAILURE);
+export const CLEAN_SEARCH = 'CLEAN_SEARCH';
+export const cleanSearch = createAction(CLEAN_SEARCH);
 

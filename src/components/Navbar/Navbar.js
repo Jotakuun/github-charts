@@ -5,21 +5,14 @@ import styles from './Navbar.css';
 import Autosuggest from 'react-autosuggest';
 import { debounce } from '../../helpers';
 
-const getSuggestions = value => {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
-
-  return inputLength === 0 ? [] : languages.filter(lang =>
-    lang.name.toLowerCase().slice(0, inputLength) === inputValue
-  );
-};
+import { searchRepos, cleanSearch } from '../../store/actions';
 
 const getSuggestionValue = suggestion => suggestion.name;
 
 const renderSuggestion = suggestion => (
-  <li>
+  <div>
     {suggestion.name}
-  </li>
+  </div>
 );
 
 class Navbar extends React.Component {
@@ -40,13 +33,11 @@ class Navbar extends React.Component {
   };
 
   onSuggestionsFetchRequested = ({ value }) => {
-    // dispatch search
+    this.props.searchRepos(value);
   };
 
   onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
+    this.props.cleanSearch();
   };
 
   render() {
@@ -54,8 +45,9 @@ class Navbar extends React.Component {
       <nav className={styles.Navbar}>
         <div>
           <Autosuggest
+            className={styles.Navbar__Search}
             suggestions={this.props.suggestions}
-            onSuggestionsFetchRequested={debounce(this.onSuggestionsFetchRequested.bind(this), 300)}
+            onSuggestionsFetchRequested={debounce(this.onSuggestionsFetchRequested.bind(this), 400)}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
@@ -74,9 +66,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  search: (value) => {
-    dispatch(search(value))
+  searchRepos: (value) => {
+    dispatch(searchRepos(value))
+  },
+  cleanSearch: () => {
+    dispatch(cleanSearch())
   }
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
