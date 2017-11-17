@@ -20,14 +20,6 @@ export const SET_RADAR_OPTION_SUCCESS = 'SET_RADAR_OPTION_SUCCESS';
 export const setRadarOption = createAction(SET_RADAR_OPTION);
 export const setRadarOptionsSuccess = createAction(SET_RADAR_OPTION_SUCCESS);
 
-// PopularityChart Actions
-export const GET_POPULARITY_DATA = 'GET_POPULARITY_DATA';
-export const GET_POPULARITY_DATA_SUCCESS = 'GET_POPULARITY_DATA_SUCCESS';
-export const GET_POPULARITY_DATA_FAILURE = 'GET_POPULARITY_DATA_FAILURE';
-export const getPopularityData = createAction(GET_POPULARITY_DATA);
-export const getPopularityDataSuccess = createAction(GET_POPULARITY_DATA_SUCCESS);
-export const getPopularityDataFail = createAction(GET_POPULARITY_DATA_FAILURE);
-
 // Search Actions
 export const SEARCH_REPOS = 'SEARCH_REPOS';
 export const SEARCH_REPOS_SUCCESS = 'SEARCH_REPOS_SUCCESS';

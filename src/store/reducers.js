@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 import {
     GET_REPOS_INFO, GET_REPOS_INFO_SUCCESS, GET_REPOS_INFO_FAILURE,
     GET_RADAR_DATA, GET_RADAR_DATA_SUCCESS, GET_RADAR_DATA_FAILURE,
-    GET_POPULARITY_DATA, GET_POPULARITY_DATA_SUCCESS, GET_POPULARITY_DATA_FAILURE,
     SET_RADAR_OPTION, SET_RADAR_OPTION_SUCCESS,
     SEARCH_REPOS, SEARCH_REPOS_SUCCESS, SEARCH_REPOS_FAILURE,
     CLEAN_SEARCH
@@ -24,11 +23,7 @@ const initial = {
         radarOptions: ['Overall'],
         optionSelected: 'Overall',
         loading: true
-    },
-    popularity: {
-        data: [],
-        loading: true
-    },
+    }
 };
 
 function repos(state = initial.repos, { type, payload }) {
@@ -78,18 +73,6 @@ function radar(state = initial.radar, { type, payload }) {
     return state;
 }
 
-function popularity(state = initial.popularity, { type, payload }) {
-    switch (type) {
-        case GET_POPULARITY_DATA:
-            return { ...state, loading: true };
-        case GET_POPULARITY_DATA_SUCCESS:
-            return { ...state, data: payload.data, loading: false };
-        case GET_POPULARITY_DATA_FAILURE:
-            return { ...state, loading: false };
-    }
-    return state;
-}
-
 export default combineReducers(
-    { repos, radar, popularity }
+    { repos, radar }
 );

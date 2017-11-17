@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Dashboard.css';
 import RadarChart from '../RadarChart/RadarChart';
-import PopularityChart from '../PopularityChart/PopularityChart';
 import RepoCard from '../RepoCard/RepoCard';
 import { connect } from 'react-redux';
 import { apiHost, fetchRepoData } from '../../helpers';
@@ -38,9 +37,6 @@ class Dashboard extends React.Component {
         <div className={styles.Dashboard__Body}>
           <section className={styles.Dashboard__Chart}>
             <RadarChart />
-          </section>
-          <section className={styles.Dashboard__Chart}>
-            <PopularityChart />
           </section>
         </div>
       </div>

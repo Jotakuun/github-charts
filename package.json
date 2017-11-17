@@ -8,7 +8,7 @@
     "build": "webpack -p --progress --config webpack.production.config.js",
     "clean": "rm build/app.js"
   },
-  "author": "Juan M. Rivas & Adrián Gabarró",
+  "author": "Juan M. Rivas",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Jotakuun/github-charts/issues"
