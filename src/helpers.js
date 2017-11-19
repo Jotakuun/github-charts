@@ -1,4 +1,4 @@
-export const apiHost = 'https:/api.github.com/';
+export const apiHost = 'https://api.github.com/';
 
 export const colors = ["#9780ED", "#80EDCE", "#FFDB3D"];
 
