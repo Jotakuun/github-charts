@@ -1,13 +1,4 @@
 # github-charts
-### Early development
+Data visualization using the Github public API to represent basic statistics of repositories.
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
+Check out the [demo](http://jotakuun.github.io/github-charts)

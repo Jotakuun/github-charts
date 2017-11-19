@@ -20,7 +20,7 @@ class Main extends React.Component {
   render() {
     return (
       <Provider store={configureStore()}>
-      <Router history={browserHistory}>
+      <Router>
         <Route path="/" component={App}>
           <IndexRoute component={Dashboard} />
         </Route>
