@@ -8,6 +8,12 @@ export const getReposInfo = createAction(GET_REPOS_INFO);
 export const getReposInfoSuccess = createAction(GET_REPOS_INFO_SUCCESS);
 export const getReposInfoFail = createAction(GET_REPOS_INFO_FAILURE);
 
+export const PICK_REPO = 'PICK_REPO';
+export const pickRepo = createAction(PICK_REPO);
+export const REMOVE_REPO = 'REMOVE_REPO';
+export const removeRepo = createAction(REMOVE_REPO);
+
+
 // RadarChart Actions
 export const GET_RADAR_DATA = 'GET_RADAR_DATA';
 export const GET_RADAR_DATA_SUCCESS = 'GET_RADAR_DATA_SUCCESS';

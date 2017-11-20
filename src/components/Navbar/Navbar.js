@@ -5,7 +5,7 @@ import styles from './Navbar.css';
 import Autosuggest from 'react-autosuggest';
 import { debounce } from '../../helpers';
 
-import { searchRepos, cleanSearch } from '../../store/actions';
+import { searchRepos, cleanSearch, pickRepo } from '../../store/actions';
 
 const getSuggestionValue = suggestion => suggestion.name;
 
@@ -40,6 +40,12 @@ class Navbar extends React.Component {
     this.props.cleanSearch();
   };
 
+  onSuggestionSelected = (event, { suggestion }) => {
+    console.log(suggestion)
+    this.inputProps.value = '';
+    this.props.pickRepo({author: suggestion.owner.login, name: suggestion.name})
+  }
+
   render() {
     return (
       <nav className={styles.Navbar}>
@@ -50,6 +56,7 @@ class Navbar extends React.Component {
             onSuggestionsFetchRequested={debounce(this.onSuggestionsFetchRequested.bind(this), 400)}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
             getSuggestionValue={getSuggestionValue}
+            onSuggestionSelected={this.onSuggestionSelected.bind(this)}
             renderSuggestion={renderSuggestion}
             inputProps={this.inputProps}
           />
@@ -71,6 +78,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   cleanSearch: () => {
     dispatch(cleanSearch())
+  },
+  pickRepo: (repo) => {
+    dispatch(pickRepo(repo))
   }
 });
 

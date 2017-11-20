@@ -4,8 +4,10 @@ import {
     GET_RADAR_DATA, GET_RADAR_DATA_SUCCESS, GET_RADAR_DATA_FAILURE,
     SET_RADAR_OPTION, SET_RADAR_OPTION_SUCCESS,
     SEARCH_REPOS, SEARCH_REPOS_SUCCESS, SEARCH_REPOS_FAILURE,
-    CLEAN_SEARCH
+    CLEAN_SEARCH, PICK_REPO, REMOVE_REPO
 } from './actions';
+
+import { colors } from '../helpers';
 
 const initial = {
     repos: {
@@ -40,9 +42,27 @@ function repos(state = initial.repos, { type, payload }) {
         case SEARCH_REPOS_SUCCESS:
             return { ...state, suggestions: payload };
         case SEARCH_REPOS_FAILURE:
-            return { ...state, error: payload};
+            return { ...state, error: payload };
         case CLEAN_SEARCH:
             return { ...state, suggestions: [] };
+        case PICK_REPO:
+            return {
+                ...state,
+                pickedRepos: [
+                    ...state.pickedRepos,
+                    {
+                        author: payload.author,
+                        name: payload.name,
+                        color: colors[state.pickedRepos.length + 1]
+                    }
+                ]
+            };
+        case REMOVE_REPO:
+            return {
+                ...state,
+                suggestions: [],
+                pickedRepos: state.pickedRepos.filter((repo) => repo.name !== payload.name && repo.author !== payload.author)
+            };
     }
     return state;
 }

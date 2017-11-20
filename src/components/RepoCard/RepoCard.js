@@ -12,7 +12,7 @@ export default class RepoCard extends React.Component {
                 <div className={styles.RepoCard}
                     style={{ borderColor: this.props.color, borderTopWidth: 3, borderTopStyle: 'solid' }}>
                     <div className={styles.RepoCard__Title}>
-                        <span className={styles.RepoCard__Author}>{this.props.repo.organization.login}/</span>
+                        <span className={styles.RepoCard__Author}>{this.props.repo.owner.login}/</span>
                         <span className={styles.RepoCard__Name}>{this.props.repo.name}</span>
                     </div>
                     <a className={styles.RepoCard__Homepage} href={this.props.repo.homepage}>

@@ -1,6 +1,6 @@
 export const apiHost = 'https://api.github.com/';
 
-export const colors = ["#9780ED", "#80EDCE", "#FFDB3D"];
+export const colors = ['#9780ED', '#80EDCE', '#FFDB3D', '#FAA952', '#F584C6', '#737FFF'];
 
 export function fetchData(url, params) {
     return new Promise((resolve, reject) => {

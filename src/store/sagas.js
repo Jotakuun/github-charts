@@ -4,7 +4,8 @@ import {
     GET_REPOS_INFO, GET_REPOS_INFO_SUCCESS, GET_REPOS_INFO_FAILURE,
     GET_RADAR_DATA, GET_RADAR_DATA_SUCCESS, GET_RADAR_DATA_FAILURE,
     SET_RADAR_OPTION_SUCCESS, SET_RADAR_OPTION,
-    SEARCH_REPOS, SEARCH_REPOS_SUCCESS, SEARCH_REPOS_FAILURE, CLEAN_SEARCH
+    SEARCH_REPOS, SEARCH_REPOS_SUCCESS, SEARCH_REPOS_FAILURE,
+    CLEAN_SEARCH, PICK_REPO, REMOVE_REPO
 } from './actions';
 
 import { apiHost, fetchData } from '../helpers';
@@ -69,7 +70,6 @@ function* radarOptions() {
 }
 
 function* getReposInfo() {
-    yield take(GET_REPOS_INFO)
     try {
         const pickedRepos = yield select((state) => state.repos.pickedRepos);
         const data = yield call(fetchReposData, pickedRepos);
@@ -82,15 +82,20 @@ function* getReposInfo() {
 
 function* getReposSuggestions(action) {
     try {
-        const response = yield call(hello, action.payload);
+        const response = yield call(getSuggestions, action.payload);
         yield put({ type: SEARCH_REPOS_SUCCESS, payload: response.items });
 
     } catch (err) {
         yield put({ type: SEARCH_REPOS_FAILURE, payload: err });
     }
 }
-function hello(value) {
-    return fetchData(apiHost + `search/repositories?q=${value}`);
+
+function* pickRepo(action) {
+    yield put({ type: GET_REPOS_INFO, payload: null })
+}
+
+function getSuggestions(value) {
+    return fetchData(apiHost + `search/repositories?q=${value}&sort=stars`);
 }
 
 function fetchReposData(reposPicked) {
@@ -103,8 +108,10 @@ function fetchReposData(reposPicked) {
 export default function* rootSaga() {
     yield [
         yield fork(getReposInfo),
+        yield takeLatest(GET_REPOS_INFO, getReposInfo),
         yield takeLatest(GET_REPOS_INFO_SUCCESS, getRadarData),
         yield takeLatest(SET_RADAR_OPTION, radarOptions),
-        yield takeLatest(SEARCH_REPOS, getReposSuggestions)
+        yield takeLatest(SEARCH_REPOS, getReposSuggestions),
+        yield takeLatest(PICK_REPO, pickRepo)
     ]
 }
