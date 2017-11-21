@@ -4,27 +4,31 @@ import RadarChart from '../RadarChart/RadarChart';
 import RepoCard from '../RepoCard/RepoCard';
 import { connect } from 'react-redux';
 import { apiHost, fetchRepoData } from '../../helpers';
-import { getReposInfo } from '../../store/actions';
+import { getReposInfo, removeRepo } from '../../store/actions';
 import { colors } from '../../helpers';
 
 import * as d3 from 'd3';
 
-
 class Dashboard extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.colors = colors;
+    this.removeRepo = this.removeRepo.bind(this);
   }
   componentWillMount() {
+    console.log(this.props)
     if (this.props.pickedRepos) {
       this.props.getReposData(this.props.pickedRepos);
     }
+  }
+  removeRepo(repo) {
+    this.props.removeRepo(repo);
   }
   render() {
     const pickedRepos = this.props.repos.map((repo, index) => {
       return (
         <li key={index}>
-          <RepoCard repo={repo} color={this.colors[index]} />
+          <RepoCard repo={repo} color={this.colors[index]} delete={this.removeRepo} />
         </li>
       );
     })
@@ -50,8 +54,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getReposData(pickedRepos) {
+  getReposData: (pickedRepos) => {
     dispatch(getReposInfo(pickedRepos))
+  },
+  removeRepo: (repo) => {
+    dispatch(removeRepo(repo))
   }
 });
 

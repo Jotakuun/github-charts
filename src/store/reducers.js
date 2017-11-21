@@ -61,6 +61,7 @@ function repos(state = initial.repos, { type, payload }) {
             return {
                 ...state,
                 suggestions: [],
+                data: state.data.filter((repo) => repo.id !== payload.id),
                 pickedRepos: state.pickedRepos.filter((repo) => repo.name !== payload.name && repo.author !== payload.author)
             };
     }

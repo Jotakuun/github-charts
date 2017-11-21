@@ -14,7 +14,6 @@ import { colors } from '../helpers';
 
 function* getRadarData() {
     try {
-        yield take(GET_RADAR_DATA);
         const repos = yield select((state) => state.repos.data);
 
         let data = repos.map((data, i) => ({
@@ -93,6 +92,9 @@ function* getReposSuggestions(action) {
 function* pickRepo(action) {
     yield put({ type: GET_REPOS_INFO, payload: null })
 }
+function* removeRepo(action) {
+    yield call(getRadarData)
+}
 
 function getSuggestions(value) {
     return fetchData(apiHost + `search/repositories?q=${value}&sort=stars`);
@@ -112,6 +114,7 @@ export default function* rootSaga() {
         yield takeLatest(GET_REPOS_INFO_SUCCESS, getRadarData),
         yield takeLatest(SET_RADAR_OPTION, radarOptions),
         yield takeLatest(SEARCH_REPOS, getReposSuggestions),
-        yield takeLatest(PICK_REPO, pickRepo)
+        yield takeLatest(PICK_REPO, pickRepo),
+        yield takeLatest(REMOVE_REPO, removeRepo)
     ]
 }

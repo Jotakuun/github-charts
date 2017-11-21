@@ -1,7 +1,9 @@
 .RepoCard {
+    position: relative;
     background: #fff;
     padding: 10px;
     margin-bottom: 20px;
+    overflow: hidden;
     &__Title {
         margin: 10px 0;
     }
@@ -15,5 +17,31 @@
     &__Homepage {
         color: #52C5FF;
         font-decoration: none;
+    }
+    &__Delete {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 10px;
+        width: 15px;
+        height: 15px;
+        stroke: #3d3d3d;
+        fill: transparent;
+        stroke-linecap: round;
+        stroke-width: 5;
+        cursor: pointer;
+        transform: translateX(30px);
+        transition: .3s all ease-in-out;
+    }
+    &:hover .RepoCard__Delete{
+        transform: translateX(0);
+        transition: .1s all ease-in;
+    }
+    &__DeleteIcon {
+        opacity: 0;
+    }
+    &:hover .RepoCard__DeleteIcon{
+        opacity: 1;
+        transition: .3s all ease-in;
     }
 }

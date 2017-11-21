@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import configureStore from './store/store';
 
 // Components
@@ -20,7 +20,7 @@ class Main extends React.Component {
   render() {
     return (
       <Provider store={configureStore()}>
-      <Router>
+      <Router history={hashHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Dashboard} />
         </Route>
