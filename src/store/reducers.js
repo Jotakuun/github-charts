@@ -55,7 +55,8 @@ function repos(state = initial.repos, { type, payload }) {
                         name: payload.name,
                         color: colors[state.pickedRepos.length + 1]
                     }
-                ]
+                ],
+                optionSelected: 'Overall'
             };
         case REMOVE_REPO:
             return {

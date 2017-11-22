@@ -9,4 +9,14 @@
     margin-top: 10px;
     height: 500px;
   }
+  &__NoContent {
+    display: block;
+    height: 500px;
+    span {
+      display: inline-block;
+      margin-top: 150px;
+      font-size: 18px;
+      color: #737373;
+    }
+  }
 }

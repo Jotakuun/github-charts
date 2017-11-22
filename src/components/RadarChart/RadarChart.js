@@ -26,15 +26,15 @@ class RadarChart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-      if (nextProps.axis !== this.props.axis) {
-        // recalculate maxValue
-          this.canvas.maxValue = d3.max(nextProps.axis, (i) => {
-            return d3.max(i.map(axis => axis.value))
-          });
-        
-        this.createCanvasSegments(nextProps.axis[0]);
-        this.drawData(nextProps.axis);
-      }
+    if (nextProps.axis !== this.props.axis) {
+      // recalculate maxValue
+      this.canvas.maxValue = d3.max(nextProps.axis, (i) => {
+        return d3.max(i.map(axis => axis.value))
+      });
+
+      this.createCanvasSegments(nextProps.axis[0]);
+      this.drawData(nextProps.axis);
+    }
   }
 
   drawData(data) {
@@ -149,20 +149,27 @@ class RadarChart extends React.Component {
         translateY: this.canvas.margin / 2
       }));
     }
+    let showRadar;
+    if (this.props.repos) {
+      showRadar = this.props.repos.length >= 3 ? true : false;
+    }
     return (
       <Card>
         <div className={styles.RadarChart}>
           <div>
             <RadarOptions />
           </div>
-          <div className={styles.RadarChart__Canvas}>
-            <RadarCanvas width={(this.canvas.width + this.canvas.margin)}
-              height={(this.canvas.height + this.canvas.margin)}
-              lines={lines}
-              segments={this.canvasSegments}
-              levelsText={this.canvasLevelsText}
-              axisText={this.canvasAxisText} />
-          </div>
+          {
+            showRadar ?
+              <div className={styles.RadarChart__Canvas}>
+                <RadarCanvas width={(this.canvas.width + this.canvas.margin)}
+                  height={(this.canvas.height + this.canvas.margin)}
+                  lines={lines}
+                  segments={this.canvasSegments}
+                  levelsText={this.canvasLevelsText}
+                  axisText={this.canvasAxisText} />
+              </div> : <div className={styles.RadarChart__NoContent}><span>Please pick at least 3 repositories</span></div>
+          }
         </div>
       </Card>
     );
