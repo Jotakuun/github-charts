@@ -12,26 +12,30 @@ import * as d3 from 'd3';
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { highlight: null };
     this.colors = colors;
     this.removeRepo = this.removeRepo.bind(this);
   }
-  componentWillMount() {
-    console.log(this.props)
-    if (this.props.pickedRepos) {
-      this.props.getReposData(this.props.pickedRepos);
-    }
-  }
+
   removeRepo(repo) {
     this.props.removeRepo(repo);
+  }
+  hightlight = (repo, color) => {
+    if (repo) {
+      this.setState({ highlight: { ...repo, color: color } });
+    } else {
+      this.setState({ highlight: null });
+
+    }
   }
   render() {
     const pickedRepos = this.props.repos.map((repo, index) => {
       return (
         <li key={index}>
-          <RepoCard repo={repo} color={this.colors[index]} delete={this.removeRepo} />
+          <RepoCard repo={repo} color={this.colors[index]} delete={this.removeRepo} highlight={this.hightlight} />
         </li>
       );
-    })
+    });
 
     return (
       <div className={styles.Dashboard__Container}>
@@ -40,7 +44,7 @@ class Dashboard extends React.Component {
         </aside>
         <div className={styles.Dashboard__Body}>
           <section className={styles.Dashboard__Chart}>
-            <RadarChart />
+            <RadarChart highlightRepo={this.state.highlight} />
           </section>
         </div>
       </div>

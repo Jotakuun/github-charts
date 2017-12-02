@@ -23,6 +23,7 @@ class RadarChart extends React.Component {
     this.canvasSegments = [];
     this.canvasLevelsText = [];
     this.canvasAxisText = [];
+    this.hightlightRepo = this.hightlightRepo.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,6 +35,33 @@ class RadarChart extends React.Component {
 
       this.createCanvasSegments(nextProps.axis[0]);
       this.drawData(nextProps.axis);
+    }
+    if (nextProps.highlightRepo !== this.props.highlightRepo && this.props.optionSelected === 'Overall') {
+      this.hightlightRepo(nextProps.highlightRepo);
+    }
+  }
+
+  hightlightRepo(repo) {
+    const t = d3.transition()
+      .duration(200)
+      .ease(d3.easeSinInOut);
+    let wrap = d3.selectAll('.radarArea').transition(t);
+    let path = d3.selectAll('.radarStroke').transition(t);
+    let circles = d3.selectAll('.edgeCircle').transition(t);
+    if (repo) {
+      wrap.attr('opacity', (d) =>
+        d[0].color === repo.color ? 0.9 : 0.1
+      );
+      path.attr('opacity', (d) =>
+        d[0].color === repo.color ? 0.9 : 0.3
+      );
+      circles.style('fill-opacity', (d) =>
+        d.color === repo.color ? 0.9 : 0.3
+      );
+    } else {
+      wrap.attr('opacity', 0.7);
+      path.attr('opacity', 0.9);
+      circles.style('fill-opacity', 1);
     }
   }
 
@@ -68,22 +96,22 @@ class RadarChart extends React.Component {
       .style('fill', (d, i) => d[0].color)
       .style('fill-opacity', 0.5);
 
-    polygon.append("path")
-      .attr("class", "radarStroke")
-      .attr("d", (d, i) => radarLine(d))
-      .style("stroke-width", 2 + "px")
-      .style("stroke", (d) => d[0].color)
-      .style("fill", "none");
+    polygon.append('path')
+      .attr('class', 'radarStroke')
+      .attr('d', (d, i) => radarLine(d))
+      .style('stroke-width', 2 + 'px')
+      .style('stroke', (d) => d[0].color)
+      .style('fill', 'none');
 
-    polygon.selectAll(".radarCircle")
+    polygon.selectAll('.radarCircle')
       .data((d, i) => d)
-      .enter().append("circle")
-      .attr("class", "edgeCircle")
-      .attr("r", 4)
-      .attr("cx", (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
-      .attr("cy", (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
-      .style("fill", (d) => d.color)
-      .style("fill-opacity", 1);
+      .enter().append('circle')
+      .attr('class', 'edgeCircle')
+      .attr('r', 4)
+      .attr('cx', (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
+      .style('fill', (d) => d.color)
+      .style('fill-opacity', 1);
   }
 
   createCanvasSegments(axis) {
@@ -180,7 +208,8 @@ const mapStateToProps = (state) => ({
   radarData: state.radar.data,
   repos: state.repos.data,
   pickedRepos: state.repos.pickedRepos,
-  axis: state.radar.axis
+  axis: state.radar.axis,
+  optionSelected: state.radar.optionSelected
 });
 
 export default connect(mapStateToProps)(RadarChart);
